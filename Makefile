@@ -26,6 +26,6 @@ $(DESTDIR)$(SYSTEMD_HOME):
 	mkdir -p $(DESTDIR)$(SYSTEMD_HOME)
 .PHONY: $(DESTDIR)$(SYSTEMD_HOME)
 
-enable:
+enable: install
 	systemctl enable --now zfs-auto-snapshot.target
 .PHONY: enable
