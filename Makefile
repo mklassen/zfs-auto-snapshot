@@ -4,7 +4,7 @@ SYSTEMD_HOME := $(PREFIX)/lib/systemd/system
 all:
 .PHONY: all
 
-install:
+install: $(DESTDIR)$(SYSTEMD_HOME)
 	install -m 0755 -d $(DESTDIR)$(PREFIX)/sbin $(DESTDIR)$(PREFIX)/share/man/man8
 	install -m 0755 src/zfs-auto-snapshot.sh $(DESTDIR)$(PREFIX)/sbin/zfs-auto-snapshot
 	install -m 0644 -t $(DESTDIR)$(PREFIX)/share/man/man8 src/zfs-auto-snapshot.8
@@ -21,6 +21,10 @@ install:
 		timers/zfs-auto-snapshot-weekly.timer \
 		timers/zfs-auto-snapshot.target
 .PHONY: install
+
+$(DESTDIR)$(SYSTEMD_HOME):
+	mkdir -p $(DESTDIR)$(SYSTEMD_HOME)
+.PHONY: $(DESTDIR)$(SYSTEMD_HOME)
 
 enable:
 	systemctl enable --now zfs-auto-snapshot.target
